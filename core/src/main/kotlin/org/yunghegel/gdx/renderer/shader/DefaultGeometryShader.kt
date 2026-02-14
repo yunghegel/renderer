@@ -20,16 +20,17 @@ class DefaultGeometryShader(val renderable: Renderable?) : DefaultShader(rendera
         const val DEFAULT_FRAGMENT_PATH = "shaders/geometry.frag"
     }
 
+    var program : ShaderProgram? = null
+    var context : RenderContext? = null
+    var handle : Int = 0
+
+
     init {
+
         initShader(DEFAULT_VERTEX_PATH, DEFAULT_FRAGMENT_PATH)
         init(program,renderable)
     }
 
-
-
-    var program : ShaderProgram? = null
-    var context : RenderContext? = null
-    var handle : Int = 0
 
 
 
@@ -50,7 +51,7 @@ class DefaultGeometryShader(val renderable: Renderable?) : DefaultShader(rendera
             throw IllegalStateException("Shader compilation failed: ${program!!.log}")
         }
 
-        handle = program.handle
+        handle = program!!.handle
     }
 
     fun checkAttribute(attribute: Long, renderable: Renderable, defineIf : String? = null) {

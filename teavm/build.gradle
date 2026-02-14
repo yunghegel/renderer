@@ -1,5 +1,6 @@
 plugins {
   id 'java'
+  id 'application'
   id 'org.gretty' version '3.1.0'
 }
 
@@ -10,6 +11,9 @@ gretty {
 
 sourceSets.main.resources.srcDirs += [ rootProject.file('assets').path ]
 project.ext.mainClassName = 'org.yunghegel.gdx.teavm.TeaVMBuilder'
+application {
+  mainClass.set(project.ext.mainClassName)
+}
 eclipse.project.name = appName + '-teavm'
 
 // This must be at least 11, and no higher than the JDK version this project is built with.
@@ -35,7 +39,7 @@ dependencies {
 tasks.register('buildJavaScript', JavaExec) {
   dependsOn classes
   setDescription("Transpile bytecode to JavaScript via TeaVM")
-  mainClass.set(project.mainClassName)
+  mainClass.set(application.mainClass)
   setClasspath(sourceSets.main.runtimeClasspath)
 }
 build.dependsOn buildJavaScript

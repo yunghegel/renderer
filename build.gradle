@@ -32,8 +32,16 @@ allprojects {
 configure(subprojects) {
   apply plugin: 'java-library'
   apply plugin: 'kotlin'
-  sourceCompatibility = 17
+
+ java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+ }
+
+
+
   compileJava {
+    options.encoding = 'UTF-8'
     options.incremental = true
   }
   // From https://lyze.dev/2021/04/29/libGDX-Internal-Assets-List/
@@ -53,11 +61,13 @@ configure(subprojects) {
       assetsFile.append(it + "\n")
     }
   }
-  compileKotlin.compilerOptions {
-    jvmTarget.set(JvmTarget.JVM_17)
-    freeCompilerArgs = ['-Xcontext-receivers', '-java-parameters']
+  compileKotlin {
+    compilerOptions {
+      jvmTarget.set(JvmTarget.JVM_17)
+      freeCompilerArgs = ['-Xcontext-receivers', '-java-parameters']
+    }
   }
-  
+
 }
 
 subprojects {
